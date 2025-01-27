@@ -3,11 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Text Upload</title>
 </head>
 <body>
-    <h1>
-        HWY
-    </h1>
+    <h1>Upload Text</h1>
+
+    <!-- Input fields for the required format -->
+    <p>Users (comma-separated):</p>
+    <input type="text" id="users" placeholder="e.g., user1,user2" />
+
+    <p>Day</p>
+    <input type="text" id="day" placeholder="e.g., 1,2" />
+
+    <p>Slots (seven 0s or 1s separated by commas):</p>
+    <input type="text" id="slots" placeholder="e.g., 0,1,0,1,0,1,0" />
+
+    <p>reason</p>
+    <input type="text" id="reason" placeholder="drugs" />
+
+    <button id="submitBtn">Submit</button>
+
+    <script>
+        document.getElementById("submitBtn").addEventListener("click", async function () {
+            // Get the values from the inputs
+            const usersInput = document.getElementById("users").value;
+            const dayInput = document.getElementById("day").value;
+            const slotsInput = document.getElementById("slots").value;
+            const reason = document.getElementById("reason").value;
+
+            // Format the inputs into the expected structure
+            const formattedData = {
+                users: usersInput.split(",").map(user => user.trim()),
+                Day: parseInt(dayInput),
+                slots: slotsInput.split(",").map(num => parseInt(num.trim())),
+                reason: reason
+            };
+
+            // Send the data as a POST request
+            try {
+                const response = await fetch("http://localhost:3000/api/v1/request", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ text: formattedData })
+                });
+
+                const result = await response.json();
+                alert(`Response: ${JSON.stringify(result)}`);
+            } catch (error) {
+                console.error("Error:", error);
+                alert("An error occurred while sending the request.");
+            }
+        });
+    </script>
 </body>
 </html>
