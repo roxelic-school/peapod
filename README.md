@@ -1,6 +1,6 @@
 ```js
 {
-    "28/1/2025-2": [ 
+    "28/1/2025": [ 
         // slots
         [
             // slot content
@@ -9,3 +9,5 @@
     ]
 }
 ```
+
+Remeber to make the `./data` folder automatically generate lmao

@@ -5,7 +5,7 @@ const router = express.Router();
 router.get('/', async (req, res) => {
 
     // get the amount of times this api has been called
-    let {count} = await utils.read('data');
+    let {count} = await utils.read('data') || 0;
     res.json({hi: count});
 });
 

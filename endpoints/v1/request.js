@@ -10,12 +10,14 @@ router.post('/request', async (req, res) => {
     }
 
     let currentData = utils.read("times") || {};
-    let newData = currentData[`${text.Date}`] || utils.times;
+    let newData = currentData[`${text.date}`] || utils.times;
 
     for (const [index, slot] of text.slots.entries()) {
         if (slot === 0) continue; 
 
-        console.log(slot);
+        // console.log(`${newData[index]} -- ${index}`);
+        // console.log(text.users);
+        // console.log(await utils.findUserSpread("roxie",text.date));
     }
 
     res.json({

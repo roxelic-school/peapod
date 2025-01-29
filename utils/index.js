@@ -4,6 +4,7 @@ const { genAuthCode } = require('./house/auth');
 const { validateFormatting } = require('./house/postAuth');
 const { myLogger } = require('./house/logger');
 const { times } = require('./house/examples');
+const { findweek, findUserSpread } = require('./house/finding');
 
 module.exports = {
   test,
@@ -11,5 +12,6 @@ module.exports = {
   genAuthCode,
   validateFormatting,
   myLogger,
-  times
+  times,
+  findweek, findUserSpread
 };
