@@ -41,8 +41,11 @@ async function findUserSpread(name, day){
     let count = 0;
 
     week.days.forEach(day => {
-        if(times?.[`${day}`]) times[`${day}`].forEach(slot =>{
-            if (slot[0] != null && slot[0].includes(name) || false){
+        let parts = day.split("/");
+        let newDay = `${parts[1]}/${parts[0]}/${parts[2]}`;
+
+        if(times?.[`${newDay}`]) times[`${newDay}`].forEach(slot =>{
+            if (slot[0] != null && slot[0][0] != null && slot[0][0].includes(name) || false){
                 count+=1;
             }
         });

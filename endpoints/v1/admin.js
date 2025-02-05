@@ -3,21 +3,13 @@ const router = express.Router();
 const utils = require('../../utils');
 
 router.get('/admin', async (req, res) => {
-    let currentContent = await utils.read("auth");
-    let dataContent = await utils.read("times");
+    let currentContent = await utils.read("auth") || {};
     let token = req.cookies?.token || null;
 
-    if (currentContent[`${token}`] && currentContent[`${token}`] == true){
-        
-        if (req.query.type == "emptySlot"){
-
-        } else if (req.query.type == "writeSlot"){
-
-        }
-
-        res.json({hi: "admin"});
+    if (currentContent[`${token}`] != null && currentContent[`${token}`] == true){
+        res.json({message: "admin"});
     } else {
-        return res.json({error: "unauthorised"});
+        return res.json({message: "unauthorised"});
     }
 });
 
