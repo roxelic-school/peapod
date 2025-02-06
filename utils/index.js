@@ -5,6 +5,7 @@ const { validateFormatting } = require('./house/postAuth');
 const { myLogger } = require('./house/logger');
 const { times } = require('./house/examples');
 const { findweek, findUserSpread } = require('./house/finding');
+const { isAdmin } = require('./house/log');
 
 module.exports = {
   test,
@@ -13,5 +14,6 @@ module.exports = {
   validateFormatting,
   myLogger,
   times,
-  findweek, findUserSpread
+  findweek, findUserSpread,
+  isAdmin
 };

@@ -2,7 +2,7 @@ const utils = require('../../../utils');
 const express = require('express');
 const router = express.Router();
 
-router.get('/admin/gen', async (req, res) => {
+router.get('/admin/gen',utils.isAdmin, async (req, res) => {
     let currentContent = await utils.read("auth") || {};
     let newAuth = utils.genAuthCode();
 

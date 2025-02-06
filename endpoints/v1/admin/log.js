@@ -11,7 +11,7 @@ router.get('/admin/log', async (req, res) => {
         utils.writeDataFile("auth", currentContent)
 
         res.cookie('token', token, { httpOnly: true });
-        res.json({hi: "hi"});
+        res.redirect('./');
     } else {
         res.json({what: "you are a bad student ):"});
     }

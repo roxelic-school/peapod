@@ -23,6 +23,14 @@ app.use('/api', apiRoutes);
 
 // initialisation
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT} \n http://localhost:${PORT}/api/v1/ \n http://localhost:${PORT}/frontends/`);
+app.listen(PORT, async () => {
+    let currentContent = await utils.read("auth") || {};
+    let newAuth = utils.genAuthCode();
+    while (currentContent[`${newAuth}`]){
+        newAuth = utils.genAuthCode();
+    }
+    currentContent[`${newAuth}`] = false;
+    utils.writeDataFile("auth", currentContent)
+    
+    console.log(`Server is running on port ${PORT} \n http://localhost:${PORT}/api/v1/ \n http://localhost:${PORT}/frontends/ \n http://localhost:3000/api/v1/admin/log?token=${newAuth}`);
 });

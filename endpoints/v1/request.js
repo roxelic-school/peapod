@@ -9,29 +9,55 @@ router.post('/request', async (req, res) => {
         return res.status(403).json({error: "inccorrect data"})
     }
 
+    let defaultdata = [
+        [null],
+        [null],
+        [null],
+        [null],
+        [null],
+        [null],
+        [null]
+    ]
+
     let currentData = await utils.read("times") || {};
-    let newData = currentData[`${text.date}`] || utils.times;
-    let code = null;
+    let newData = currentData[`${text.date}`] || defaultdata;
+
+    let code = {
+        "one": true,
+        "two": true,
+        "three": true
+    };
+
+    let userData = 0;
+
+    let amount = await checkuser(text.users, text.date); 
+    amount.forEach(item => {
+        if (item >= 3) {
+            code.one = false
+        } if (item > userData) {
+            userData = item;
+        }
+    });
 
     for (const [index, slot] of text.slots.entries()) {
         if (slot === 0) continue; 
+        if (userData >= 3) {
+            code.one = false;
+            continue;
+        }
 
-        // console.log(`${newData[index]} -- ${index}`);
-        // console.log(text.users);
-        let amount = await checkuser(text.users, text.date); 
-        amount.forEach(item => {
-            console.log(item);
-            if (item >= 3 && code == null) code = 1;
-        });
+        if (newData[index][0] == null && code.one && code.two && code.three) {
+            newData[index][0] = [text.users, text.reason]
+        } else code = false;
 
-        if (newData[index][0] == null && code == null) newData[index][0] = [text.users, text.reason]
-        else if (code == null) code = 2;
+        userData += 1;
     }
 
     currentData[`${text.date}`] = newData;
+    console.log(newData);
     utils.writeDataFile("times", currentData);
 
-    res.json(code || 3);
+    res.json(code);
 });
 
 async function checkuser(users, date) {
