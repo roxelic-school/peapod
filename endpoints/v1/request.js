@@ -54,7 +54,6 @@ router.post('/request', async (req, res) => {
     }
 
     currentData[`${text.date}`] = newData;
-    console.log(newData);
     utils.writeDataFile("times", currentData);
 
     res.json(code);

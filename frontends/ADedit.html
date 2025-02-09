@@ -8,42 +8,43 @@
 <body>
     <h1>Upload Text</h1>
 
-    <!-- Input fields for the required format -->
-    <p>Users (comma-separated):</p>
-    <input type="text" id="users" placeholder="e.g., user1,user2" />
-
-    <p>Slots (seven 0s or 1s separated by commas):</p>
-    <input type="text" id="slots" placeholder="e.g., 0,1,0,1,0,1,0" />
-
-    <p>reason</p>
-    <input type="text" id="reason" placeholder="drugs" />
+    <p>option</p>
+    <select name="option" id="option">
+        <option value="delete_date">delete date content</option>
+        <option value="delete_slot">delete slot</option>
+        <option value="force_slot">force slot</option>
+        <option value="reset">reset</option>
+    </select>
 
     <p>date</p>
-    <input type="text" id="date" placeholder="28/1/2025-2" />
+    <input type="text" id="date" placeholder="HA" />
+
+    <p>content</p>
+    <input type="text" id="content" placeholder="ah" />
+
+    <p>index</p>
+    <input type="number" id="index" name="index" min="0" max="6">
 
     <button id="submitBtn">Submit</button>
-
-    <a href="./ADedit.html">admin</a>
 
     <script>
         document.getElementById("submitBtn").addEventListener("click", async function () {
             // Get the values from the inputs
-            const usersInput = document.getElementById("users").value;
-            const slotsInput = document.getElementById("slots").value;
-            const reason = document.getElementById("reason").value;
+            const option = document.getElementById("option").value;
+            const content = JSON.parse(document.getElementById("content").value);
             const date = document.getElementById("date").value;
+            const index = document.getElementById("index").value;
 
-            // Format the inputs into the expected structure
             const formattedData = {
-                users: usersInput.split(",").map(user => user.trim()),
-                slots: slotsInput.split(",").map(num => parseInt(num.trim())),
-                reason: reason,
-                date: date
+                option,
+                content,
+                date,
+                index
             };
 
             // Send the data as a POST request
             try {
-                const response = await fetch("http://localhost:3000/api/v1/request", {
+                const response = await fetch("http://localhost:3000/api/v1/admin/edit", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
