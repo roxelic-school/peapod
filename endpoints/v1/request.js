@@ -48,7 +48,7 @@ router.post('/request', async (req, res) => {
 
         if (newData[index][0] == null && code.one && code.two && code.three) {
             newData[index][0] = [text.users, text.reason]
-        } else code = false;
+        } else code.two = false;
 
         userData += 1;
     }

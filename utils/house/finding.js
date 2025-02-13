@@ -24,7 +24,7 @@ async function findweek(day) {
     for (let i = 0; i < 5; i++) {
         let tempDay = new Date(newDay);
         tempDay.setDate(newDay.getDate() - i);
-        days.push(tempDay.toLocaleDateString());
+        days.push(tempDay.toLocaleDateString("en-US"));
     }
 
     days = days.reverse();
@@ -41,10 +41,7 @@ async function findUserSpread(name, day){
     let count = 0;
 
     week.days.forEach(day => {
-        let parts = day.split("/");
-        let newDay = `${parts[1]}/${parts[0]}/${parts[2]}`;
-
-        if(times?.[`${newDay}`]) times[`${newDay}`].forEach(slot =>{
+        if(times?.[`${day}`]) times[`${day}`].forEach(slot =>{
             if (slot[0] != null && slot[0][0] != null && slot[0][0].includes(name) || false){
                 count+=1;
             }
