@@ -25,6 +25,10 @@ if (fs.existsSync(frontendsDir)) app.use('/frontends', express.static(frontendsD
 const apiRoutes = require('./endpoints/index');
 app.use('/api', apiRoutes);
 
+app.get('/', async (req, res) => {
+    res.redirect('/frontends/');
+});
+
 // initialisation
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, async () => {
