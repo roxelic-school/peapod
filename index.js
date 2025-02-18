@@ -13,6 +13,10 @@ app.use(cookieParser());
 app.use(express.json()); 
 app.use(express.urlencoded({ extended: true }));
 
+if (!fs.existsSync("./data")) {
+    fs.mkdirSync("./data");
+} 
+
 // frontends install
 const frontendsDir = path.join(__dirname, 'frontends');
 if (fs.existsSync(frontendsDir)) app.use('/frontends', express.static(frontendsDir));
