@@ -14,7 +14,7 @@ router.get('/admin/gen',utils.isAdmin, async (req, res) => {
 
     utils.writeDataFile("auth", currentContent)
 
-    res.json({newURL: `http://localhost:3000/api/v1/admin/log?token=${newAuth}`});
+    res.json({newURL: `/api/v1/admin/log?token=${newAuth}`});
 });
 
 module.exports = router;
