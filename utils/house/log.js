@@ -22,7 +22,10 @@ async function isAdmin(req, res, next) {
     if (currentContent[`${token}`] != null && currentContent[`${token}`] == true){
         return next();
     } else {
-        return res.status(401).json({ status: 'failure', message: 'Unauthorized' });
+        // uncomment when publishing
+
+        return res.status(401).json({ status: false, message: 'Unauthorized' });
+        //return next();
     }
 }
 

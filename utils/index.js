@@ -7,6 +7,11 @@ const { times } = require('./house/examples');
 const { findweek, findUserSpread } = require('./house/finding');
 const { isAdmin } = require('./house/log');
 
+async function backup(params) {
+  let data = await read("times");
+  writeDataFile("backup", data);
+};
+
 module.exports = {
   test,
   writeDataFile, read,
@@ -15,5 +20,6 @@ module.exports = {
   myLogger,
   times,
   findweek, findUserSpread,
-  isAdmin
+  isAdmin,
+  backup
 };

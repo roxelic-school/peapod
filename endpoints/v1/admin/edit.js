@@ -1,11 +1,11 @@
-const utils = require('../../../utils');
 const express = require('express');
+const utils = require('../../../utils');
 const router = express.Router();
 
-router.post('/admin/edit',utils.isAdmin, async (req, res) => {
-    let { text } = req.body;
+router.post('/admin/edit', utils.isAdmin, async (req, res) => {
+    let text = req.body;
 
-    let fullContent = await utils.read("times");
+    let fullContent = await utils.read("times") || {};
     let defaultdata = [
         [null],
         [null],
@@ -16,8 +16,10 @@ router.post('/admin/edit',utils.isAdmin, async (req, res) => {
         [null]
     ]
 
-    switch(text.option) {
+    if(text?.option && text.option != null) switch(text.option) {
         case "delete_date":
+            await utils.backup();
+            
             if (fullContent[`${text.date}`]){
                 delete fullContent[`${text.date}`];
                 utils.writeDataFile("times", fullContent);
@@ -27,6 +29,8 @@ router.post('/admin/edit',utils.isAdmin, async (req, res) => {
             }
             break;
         case "delete_slot":
+            await utils.backup();
+
             if (fullContent[`${text.date}`]){
                 if ((fullContent[`${text.date}`].length - 1) >= text.index || 0 > text.index){
                     fullContent[`${text.date}`][text.index] = [null];
@@ -40,6 +44,8 @@ router.post('/admin/edit',utils.isAdmin, async (req, res) => {
             }
             break;
         case "force_slot":
+            await utils.backup();
+
             if (fullContent[`${text.date}`]){
                 if ((fullContent[`${text.date}`].length - 1) >= text.index || 0 > text.index){
                     fullContent[`${text.date}`][text.index] = text.content;
@@ -60,6 +66,8 @@ router.post('/admin/edit',utils.isAdmin, async (req, res) => {
             }
             break;
         case "reset":
+            await utils.backup();
+
             fullContent = {};
             utils.writeDataFile("times", fullContent);
             res.json({"message":"succesfully reset"});
@@ -69,6 +77,8 @@ router.post('/admin/edit',utils.isAdmin, async (req, res) => {
             res.json({tokens});
             break;
         case "remove_token":
+            await utils.backup();
+
             let token = await utils.read("auth");
             if(token[`${text.content}`]){
                 token[`${text.content}`] = false;
@@ -77,6 +87,12 @@ router.post('/admin/edit',utils.isAdmin, async (req, res) => {
             } else {
                 res.json({"message": "token doesnt exist"});
             }
+            break;
+        case "restore":
+            let backup = await utils.read("backup");
+            utils.writeDataFile("times", backup);
+
+            res.json({"message": "sucesfully restored"});
             break;
         default:
             res.json({"message":"incorrect option"});
