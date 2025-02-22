@@ -13,6 +13,10 @@ app.use(cookieParser());
 app.use(express.json()); 
 app.use(express.urlencoded({ extended: true }));
 
+if (!fs.existsSync("./data")) {
+    fs.mkdirSync("./data");
+} 
+
 // frontends install
 const frontendsDir = path.join(__dirname, 'frontends');
 if (fs.existsSync(frontendsDir)) app.use('/frontends', express.static(frontendsDir));
@@ -20,6 +24,10 @@ if (fs.existsSync(frontendsDir)) app.use('/frontends', express.static(frontendsD
 // routes install
 const apiRoutes = require('./endpoints/index');
 app.use('/api', apiRoutes);
+
+app.get('/', async (req, res) => {
+    res.redirect('/frontends/');
+});
 
 // init discord bot
 if (process.env.DISCORDBOT == "True"){
