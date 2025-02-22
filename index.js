@@ -21,9 +21,15 @@ if (fs.existsSync(frontendsDir)) app.use('/frontends', express.static(frontendsD
 const apiRoutes = require('./endpoints/index');
 app.use('/api', apiRoutes);
 
+// init discord bot
+if (process.env.DISCORDBOT == "True"){
+    require('./discord_bot/deploy-command.js');
+    require('./discord_bot/index.js');
+}
+
 // initialisation
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, async () => {
+ app.listen(PORT, async () => {
     let currentContent = await utils.read("auth") || {};
     let newAuth = utils.genAuthCode();
     while (currentContent[`${newAuth}`]){
