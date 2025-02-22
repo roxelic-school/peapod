@@ -6,6 +6,7 @@ const { myLogger } = require('./house/logger');
 const { times } = require('./house/examples');
 const { findweek, findUserSpread } = require('./house/finding');
 const { isAdmin } = require('./house/log');
+const { checkInternetConnection } = require('./house/wificheck');
 
 async function backup(params) {
   let data = await read("times");
@@ -21,5 +22,6 @@ module.exports = {
   times,
   findweek, findUserSpread,
   isAdmin,
-  backup
+  backup,
+  checkInternetConnection
 };

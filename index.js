@@ -30,14 +30,10 @@ app.get('/', async (req, res) => {
 });
 
 // init discord bot
-utils.checkInternetConnection((isConnected) => {
-    if (isConnected && process.env.DISCORDBOT == "True") {
-        require('./discord_bot/deploy-command.js');
-        require('./discord_bot/index.js');
-    } else {
-        console.log("No internet connection or DISCORDBOT environment variable is not set to True.");
-    }
-});
+if (utils.checkInternetConnection() && process.env.DISCORDBOT == "True") {
+    require('./discord_bot/deploy-command.js');
+    require('./discord_bot/index.js');
+}
 
 // initialisation
 const PORT = process.env.PORT || 3000;
