@@ -1,5 +1,5 @@
 // i would also not copy this one, also i dont need the comments anymore since they where just step by steps from this discord.js website
-equire('dotenv').config();
+require('dotenv').config();
 
 const { REST, Routes } = require('discord.js');
 const fs = require('node:fs');

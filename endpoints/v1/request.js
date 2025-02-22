@@ -5,6 +5,8 @@ const router = express.Router();
 router.post('/request', async (req, res) => {
     let { text } = req.body;
 
+    text.date = ( new Date(text.date)).toLocaleDateString('en-US');
+
     if (!utils.validateFormatting(text)){
         return res.status(403).json({error: "inccorrect data"})
     }
@@ -52,6 +54,7 @@ router.post('/request', async (req, res) => {
 
         userData += 1;
     }
+
 
     currentData[`${text.date}`] = newData;
     utils.writeDataFile("times", currentData);

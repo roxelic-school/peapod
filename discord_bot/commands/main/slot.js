@@ -7,7 +7,7 @@ module.exports = {
         .addStringOption(option =>
             // the date for the slot
             option.setName('date')
-                .setDescription('Enter a date (MM/DD/YYYY)')
+                .setDescription('Enter a date (DD/MM/YYYY)')
                 .setRequired(true)
                 .setMinLength(10)
                 .setMaxLength(10))
@@ -31,7 +31,9 @@ module.exports = {
 
     async execute(interaction) {
         // Get user inputs
-        const date = interaction.options.getString('date');
+        let date = interaction.options.getString('date');
+        date = date.split('/');
+        date = `${date[1]}/${date[0]}/${date[2]}`;
         const slot = interaction.options.getInteger('slot');
         const people = (interaction.options.getString('people')).split(",");
         const reason = interaction.options.getString('reason');
