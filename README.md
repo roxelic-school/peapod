@@ -32,6 +32,13 @@ add this content to the file
 PORT=3000
 ```
 
+to add wifi data to your qr codes please add the following to your `.env` file
+
+```env
+SSID={your wifis ssid}
+PASSWORD={your wifis password}
+```
+
 There is also discord bot capabilitys, to add this go into the file file and add the following lines
 ```env
 DISCORDBOT=True
