@@ -29,11 +29,21 @@ app.get('/', async (req, res) => {
     res.redirect('/frontends/');
 });
 
+// 404 redirect
+app.use((req, res) => {
+    res.redirect('/frontends/404.html');
+});
+
+
 // init discord bot
-if (utils.checkInternetConnection() && process.env.DISCORDBOT == "True") {
-    require('./discord_bot/deploy-command.js');
-    require('./discord_bot/index.js');
+async function discordBotInit() {
+    if (await utils.checkInternetConnection() && process.env.DISCORDBOT == "True") {
+        require('./discord_bot/deploy-command.js');
+        require('./discord_bot/index.js');
+    }   
 }
+
+discordBotInit();
 
 // initialisation
 const PORT = process.env.PORT || 3000;
@@ -46,5 +56,9 @@ const PORT = process.env.PORT || 3000;
     currentContent[`${newAuth}`] = false;
     utils.writeDataFile("auth", currentContent)
     
-    console.log(`Server is running on port ${PORT} \n http://localhost:${PORT}/api/v1/ \n http://localhost:${PORT}/frontends/ \n http://localhost:3000/api/v1/admin/log?token=${newAuth}`);
+    console.log(`Server is running on port ${PORT}
+        http://localhost:${PORT}/api/v1/\n
+        http://localhost:${PORT}/frontends/\n
+        http://localhost:${PORT}/api/v1/admin/log?token=${newAuth}\n
+    `);
 });

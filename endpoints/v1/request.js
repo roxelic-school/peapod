@@ -5,7 +5,8 @@ const router = express.Router();
 router.post('/request', async (req, res) => {
     let { text } = req.body;
 
-    text.date = ( new Date(text.date)).toLocaleDateString('en-US');
+    text.date = text.date.split("/");
+    text.date = ( new Date(`${text.date[1]}/${text.date[0]}/${text.date[2]}`)).toLocaleDateString('en-US');
 
     if (!utils.validateFormatting(text)){
         return res.status(403).json({error: "inccorrect data"})

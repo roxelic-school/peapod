@@ -1,13 +1,13 @@
 const dns = require('dns');
 
-function checkInternetConnection() {
-    dns.lookup('www.google.com', (err) => {
-        if (err) {
-            return false
-        } else {
-            return true
-        }
-    });
+async function checkInternetConnection() {
+    try {
+        let response = await fetch ('https://www.google.com');
+
+        return true;
+    } catch (e) {
+        return false;
+    }
 }
 
 module.exports = { checkInternetConnection };

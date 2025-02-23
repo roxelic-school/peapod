@@ -31,9 +31,7 @@ module.exports = {
 
     async execute(interaction) {
         // Get user inputs
-        let date = interaction.options.getString('date');
-        date = date.split('/');
-        date = `${date[1]}/${date[0]}/${date[2]}`;
+        const date = interaction.options.getString('date');
         const slot = interaction.options.getInteger('slot');
         const people = (interaction.options.getString('people')).split(",");
         const reason = interaction.options.getString('reason');

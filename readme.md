@@ -2,52 +2,49 @@ This is a study pod booking site for my college.
 
 To install please follow these instructions
 
-clone this repo: 
 ```sh
+# clone this repo
 git clone https://github.com/roxelic-school/peapod
-```
-install the node modules
-```sh
 cd peapod
+# install the node packages
 npm install
-```
-return to the parent folder
-```sh
 cd ..
-```
-clone the frontend for this repo
-```sh
+# make the frontend folder
+mkdir frontends
+# clone the frontend repo
 git clone https://github.com/roxelic-school/mushy-peas
-```
-install the node modules
-```sh
 cd mushy-peas
+# install the node packages
 npm install
-```
-run the install / build command
-```sh
+# run the install command
 npm run dist
-```
-return to the main project
-```sh
 cd ../peapod
-```
-run the main project
-```sh
+# run the program itself
 npm run dev
 ```
+
 now your pod booking website should be up and running, feel free to add yourself as administrator with the provided url (you get this when starting the project up)
 
-here is the full install script
-```sh
-git clone https://github.com/roxelic-school/peapod
-cd peapod
-npm install
-cd ..
-git clone https://github.com/roxelic-school/mushy-peas
-cd mushy-peas
-npm install
-npm run dist
-cd ../peapod
-npm run dev
+to change the port that the application runs on, create a `.env` file in the root of `/peapod/` so it would be `/peapod/.env`
+add this content to the file
+
+```env
+PORT=3000
 ```
+
+to add wifi data to your qr codes please add the following to your `.env` file
+
+```env
+SSID={your wifis ssid}
+PASSWORD={your wifis password}
+```
+
+There is also discord bot capabilitys, to add this go into the file file and add the following lines
+```env
+DISCORDBOT=True
+
+DISCORD_TOKEN={your discord bot token}
+DISCORD_CLIENTID={your discord bot application ID}
+```
+
+now once restarting the project it will log into your discord bot and allow you to book your pods through discord
